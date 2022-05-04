@@ -1,0 +1,165 @@
+<div class="container mt-5" id="main-container">
+    <h1>Conexiones de Red</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cifrado</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Contraseña</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let connection of connections">
+                <th scope="row">{{connection.id}}</th>
+                <td>{{(connection.type) === 2 ? 'LAN' : 'Wifi'}}</td>
+                <td>{{connection.name}}</td>
+                <td>{{connection.encryption}}</td>
+                <td>{{connection.nameco}}</td>
+                <td>{{connection.pass}}</td>
+                <td>
+                    <a class="btn btn-warning mx-3" (click)="openModal('edit', connection)">
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </a>
+                    <a class="btn btn-danger" (click)="openModal('delete', connection)">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a class="btn btn-outline-dark" (click)="openModal('add')">
+            Agregar Conexión
+        </a>
+    </div>
+    <!-- add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Agregar Conexión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-2 mb-2 text-center">
+
+                        <form #addForm="ngForm" (ngSubmit)="addConnection(addForm)">
+                            <div class="mb-2">
+                                <input class="form-control" ngModel name="name" type="text" id="name"
+                                    placeholder="Nombre de la conexión">
+                            </div>
+                            <div class="mb-2">
+                                <label class="mb-2">Tipo de Conexión</label>
+                                <select class="form-select" ngModel name="type" id="type"
+                                    aria-label="Default select example">
+                                    <option value=""></option>
+                                    <option value="1">Wifi</option>
+                                    <option value="2">LAN</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="mb-2">Cifrado</label>
+                                <select class="form-select" ngModel name="encryption" id="encryption"
+                                    aria-label="Default select example">
+                                    <option value=""></option>
+                                    <option value="WEP">WEP</option>
+                                    <option value="WPA">WPA</option>
+                                    <option value="WPA2">WPA2</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <input type="text" class="form-control" ngModel name="nameco" id="nameco"
+                                    placeholder="Usuario conexión">
+                            </div>
+                            <div class="mb-2">
+                                <input type="password" class="form-control" ngModel name="pass" id="pass"
+                                    placeholder="Contraseña">
+                            </div>
+                            <button type="submit" name="btnAgregarC" class="btn btn-outline-dark" id="btnAgregarC"
+                                data-bs-dismiss="modal">Agregar</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Conexión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-2 mb-2 text-center">
+
+                        <form #updateForm="ngForm">
+                            <input type="hidden" ngModel="{{editConnection?.id}}" name="id" id="id">
+                            <div class="mb-2">
+                                <input class="form-control" ngModel="{{editConnection?.name}}" name="name" type="text"
+                                    id="name" placeholder="Nombre de la conexión">
+                            </div>
+                            <div class="mb-2">
+                                <label class="mb-2">Tipo de Conexión</label>
+                                <select class="form-select" ngModel="{{editConnection?.type}}" name="type" id="type"
+                                    aria-label="Default select example">
+                                    <option value=""></option>
+                                    <option value="1">Wifi</option>
+                                    <option value="2">LAN</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="mb-2">Cifrado</label>
+                                <select class="form-select" ngModel="{{editConnection?.encryption}}" name="encryption"
+                                    id="encryption" aria-label="Default select example">
+                                    <option value=""></option>
+                                    <option value="WEP">WEP</option>
+                                    <option value="WPA">WPA</option>
+                                    <option value="WPA2">WPA2</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <input type="text" class="form-control" ngModel="{{editConnection?.nameco}}"
+                                    name="nameco" id="nameco" placeholder="Usuario conexión">
+                            </div>
+                            <div class="mb-2">
+                                <input type="password" class="form-control" ngModel="{{editConnection?.pass}}"
+                                    name="pass" id="pass" placeholder="Contraseña">
+                            </div>
+                            <button type="submit" name="btnActualizarC" class="btn btn-outline-warning"
+                                (click)="updateConnection(updateForm.value)" data-bs-dismiss="modal">Editar</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Eliminar Conexión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro de eliminar la conexión {{delConnection?.name}}?</p>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="deleteConnection(delConnection?.id)" type="button" class="btn btn-primary"
+                        data-bs-dismiss="modal">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

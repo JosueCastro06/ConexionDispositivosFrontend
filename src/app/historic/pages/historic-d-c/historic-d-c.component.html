@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <h1 class="mb-2">Historico</h1>
+    <!-- <select class="form-select" style="width: 30%;" id="selectFilter">
+        <option disabled selected>Filtrar</option>
+        <option (click)="filter('dev')">Dispositivo</option>
+        <option (click)="filter('con')">Conexion</option>
+    </select> -->
+    <button class="btn btn-outline-dark mx-2" (click)="filter('dev')">Dispositivo</button>
+    <button class="btn btn-outline-dark" (click)="filter('con')">Conexion</button>
+    <div>
+        <form #selForm="ngForm" (ngSubmit)="selFilter(selForm)">
+            <select class="form-select mt-3" style="width: 50%;" multiple aria-label="multiple select example" ngModel
+                ngModel="devcon?.idConnection" name="idConnection" id="selectHisCon" hidden>
+                <option disabled selected>Seleccionar Conexion</option>
+                <option *ngFor="let con of connections" [value]="con?.id">
+                    {{con.name}}
+            </select>
+            <select class="form-select mt-3" style="width: 50%;" multiple aria-label="multiple select example" ngModel
+                ngModel="devcon?.idDevice" name="idDevice" id="selectHisDev" hidden>
+                <option disabled selected>Seleccionar Dispositivo</option>
+                <option *ngFor="let d of devices" [value]="d?.id">
+                    {{d.mac}}
+            </select>
+            <button type="submit" class="btn btn-dark mt-3" name="filConDev" id="filConDev">Buscar</button>
+        </form>
+    </div>
+
+    <!-- Table Connection -->
+    <table class="table table-hover mt-5" id="tableConnection" hidden>
+        <thead>
+            <tr>
+                <th scope="col">Conexión</th>
+                <th scope="col">Ip</th>
+                <th scope="col">MAC</th>
+                <th scope="col">Tipo</th>
+            </tr>
+        </thead>
+        <tbody id="dataConnection">
+            
+        </tbody>
+    </table>
+
+    <!-- Table Device -->
+    <table class="table table-hover mt-5" id="tableDevice" hidden>
+        <thead>
+            <tr>
+                <th scope="col">Dispositivo(MAC)</th>
+                <th scope="col">Tipo Dispositivo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Tipo Conexión</th>
+                <th scope="col">Cifrado</th>
+            </tr>
+        </thead>
+        <tbody id="dataDevice">
+            
+        </tbody>
+    </table>
+</div>
